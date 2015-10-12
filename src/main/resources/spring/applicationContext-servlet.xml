@@ -33,7 +33,7 @@
         </mvc:interceptor>
     </mvc:interceptors>
 
-
+ <mvc:resources mapping="/resources/**" location="/resources/" />
     <!-- 对静态资源文件的访问
     <mvc:default-servlet-handler/>
     -->

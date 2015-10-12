@@ -13,6 +13,12 @@
             <id>nexusServer</id> 
             <name>nexus distribution snapshot repository</name> 
             <url>http://maven.baihe.com/nexus/content/repositories/snapshots/</url> 
+            
+             <snapshots>
+            <updatePolicy>always</updatePolicy>
+        </snapshots>
+        
+        
         </snapshotRepository> 
            <repository>
                     <id>nexusServer</id>
@@ -28,6 +34,7 @@
             <snapshots>
                 <enabled>true</enabled>
             </snapshots>
+            
         </repository>
          <repository>
             <id>central</id>
@@ -99,8 +106,19 @@
             <groupId>com.yufei</groupId>
             <artifactId>pfw</artifactId>
             <version>0.0.1-SNAPSHOT</version>
+            
         </dependency>     
-      
+      <dependency>
+	<groupId>com.thetransactioncompany</groupId>
+	<artifactId>cors-filter</artifactId>
+	<version>2.4</version>
+</dependency>
+<dependency>
+	<groupId>com.thetransactioncompany</groupId>
+	<artifactId>java-property-utils</artifactId>
+	<version>1.9.1</version>
+</dependency>
+
         
         <dependency>
         
@@ -228,7 +246,7 @@
                 <activeByDefault>true</activeByDefault>
             </activation>
             <properties>
-                <mongo.server>localhost</mongo.server>
+                <mongo.server>172.16.16.7</mongo.server>
             
             </properties>
         </profile>
@@ -238,6 +256,15 @@
            
             <properties>
                 <mongo.server>172.16.16.7</mongo.server>
+            
+            </properties>
+        </profile>
+         <profile>
+            <!--测外-->
+            <id>test</id>
+           
+            <properties>
+                <mongo.server>localhost</mongo.server>
             
             </properties>
         </profile>
@@ -252,7 +279,7 @@
                 <filtering>true</filtering>
             </resource>
         </resources>
-        <finalName>baihe-analysis.war</finalName>
+        <finalName>baihe-analysis</finalName>
 
         <plugins>
             <plugin>

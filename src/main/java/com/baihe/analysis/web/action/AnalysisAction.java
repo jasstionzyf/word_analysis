@@ -99,12 +99,15 @@ public class AnalysisAction {
             if (params != null && !params.trim().isEmpty()) {
                 Map<String, String> paraMap = JSON.parseObject(params, new TypeReference<Map<String, String>>() {
                 });
-                String text = paraMap.get("text");
-                //message:, nickname, selfintr
+                String ids = paraMap.get("ids");
+                List<Long> ids_ = Lists.newArrayList();
+                for (String idStr : ids.split(",")) {
+                    ids_.add(Long.parseLong(idStr));
+                }
 
                 String textType = paraMap.get("textType");
                 Map<String, Object> queryMap = Maps.newHashMap();
-                queryMap.put("text:=", text.trim());
+                queryMap.put("id:in", ids_);
                 queryMap.put("type:=", textType.trim());
                 Constants.mps.removeAll(queryMap, Term.class);
 
@@ -212,14 +215,14 @@ public class AnalysisAction {
         response.setCharacterEncoding("utf-8");
         response.setContentType("text/plain");
         PrintWriter out = response.getWriter();
-        out.print(JSON.toJSONString(result, SerializerFeature.WriteMapNullValue));
+        out.print(JSON.toJSONString(result, SerializerFeature.BrowserCompatible));
         out.flush();
         out.close();
     }
     private IWordsOperation wordsOperation = new WordsOperation();
 
     @RequestMapping(value = "/addTerms", method = RequestMethod.POST)
-    public String addTerms(@RequestParam(value = "type", required = true) String corpusType, @RequestParam(value = "terms", required = true) String terms, Model model) {
+    public void addTerms(HttpServletResponse response,@RequestParam(value = "type", required = true) String corpusType, @RequestParam(value = "terms", required = true) String terms, Model model) throws IOException {
 
         String message = null;
         if (corpusType == null || corpusType.trim().length() < 1 || terms == null || terms.trim().length() < 1) {
@@ -235,8 +238,12 @@ public class AnalysisAction {
             message = "添加成功!";
 
         }
-        model.addAttribute("message", message);
-        return "addTerms";
+       response.setCharacterEncoding("utf-8");
+        response.setContentType("text/plain");
+        PrintWriter out = response.getWriter();
+        out.print("保存成功");
+        out.flush();
+        out.close();
     }
 
 }

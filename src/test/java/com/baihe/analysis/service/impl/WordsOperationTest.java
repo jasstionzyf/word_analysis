@@ -6,11 +6,14 @@
 package com.baihe.analysis.service.impl;
 
 import com.baihe.analysis.entity.Term;
+import com.baihe.analysis.service.Constants;
 import com.baihe.analysis.service.IWordsOperation;
 import com.baihe.analysis.service.TermQueryInfo;
 import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
 import com.yufei.utils.FileUtil;
 import java.util.List;
+import java.util.Map;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -48,6 +51,13 @@ public class WordsOperationTest {
      */
     @Test
     public void testRemoveTerm() {
+        Map<String, Object> queryMap = Maps.newHashMap();
+        List<Long> list=Lists.newArrayList();
+        list.add(1978100L);
+        list.add(1983239L);
+        queryMap.put("id:in", list);
+        queryMap.put("type:=", "3");
+        Constants.mps.removeAll(queryMap, Term.class);
     }
 
     /**
@@ -105,6 +115,5 @@ public class WordsOperationTest {
     @Test
     public void testListTerms() {
     }
-
 
 }
