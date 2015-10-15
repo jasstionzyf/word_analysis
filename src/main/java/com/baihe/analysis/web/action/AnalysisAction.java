@@ -5,6 +5,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.TypeReference;
 import com.alibaba.fastjson.serializer.SerializerFeature;
 import com.baihe.analysis.entity.Term;
+import com.baihe.analysis.entity.TermType;
 import com.baihe.analysis.service.Constants;
 import com.baihe.analysis.service.IWordsOperation;
 import com.baihe.analysis.service.TermQuery;
@@ -28,9 +29,7 @@ import java.io.PrintWriter;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 
 /**
  * Created by jasstion on 15/6/30.
@@ -119,6 +118,29 @@ public class AnalysisAction {
             code = -100;
             msg = e.getMessage();
             LOGGER.info("删除失败，具体异常信息是：" + msg + "");
+        }
+        printJsonTemplate(code, msg, data, request, response);
+
+    }
+
+    @RequestMapping(value = "/loadTermTypes")
+    public void loadTermTypes(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        int code = 200;
+        String msg = "正常调用";
+        Map data = Maps.newHashMap();
+        String params = request.getParameter("params");
+        TextAnalysis textProcess = new TextAnalysisImpl();
+
+        try {
+
+            List<TermType> termTypes = wordsOperation.getTermTypes();
+
+            data.put("result", termTypes);
+
+        } catch (Exception e) {
+            code = -100;
+            msg = e.getMessage();
+            LOGGER.info("查询termType异常，具体异常信息是：" + msg + "");
         }
         printJsonTemplate(code, msg, data, request, response);
 
@@ -221,29 +243,85 @@ public class AnalysisAction {
     }
     private IWordsOperation wordsOperation = new WordsOperation();
 
-    @RequestMapping(value = "/addTerms", method = RequestMethod.POST)
-    public void addTerms(HttpServletResponse response,@RequestParam(value = "type", required = true) String corpusType, @RequestParam(value = "terms", required = true) String terms, Model model) throws IOException {
+    @RequestMapping(value = "/addTermType", method = RequestMethod.GET)
+    public void addTermType(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        int code = 200;
+        String msg = "正常调用";
+        Map data = Maps.newHashMap();
+        String params = request.getParameter("params");
 
-        String message = null;
-        if (corpusType == null || corpusType.trim().length() < 1 || terms == null || terms.trim().length() < 1) {
-            message = "词典类型不能为空并且词不能为空!";
-        } else {
-            LOGGER.debug("新增类型:" + corpusType + "词典:" + terms + "");
-            List<String> words = Lists.newArrayList(terms.split(","));
-            for (String word : words) {
-                Term term = new Term(corpusType, word);
-                wordsOperation.addTerm(term);
+        try {
+            if (params != null && !params.trim().isEmpty()) {
+                Map<String, String> paraMap = JSON.parseObject(params, new TypeReference<Map<String, String>>() {
+                });
+                String type = paraMap.get("type");
+                String description = paraMap.get("description");
+                if (type == null || type.trim().length() < 1) {
+                    msg = "词典类型不能为空并且词不能为空!";
+                } else {
+                    LOGGER.debug("新增类型:" + type);
+                    TermType termType = new TermType();
+                    termType.setDescription(description);
+                    termType.setType(type);
+                    wordsOperation.addTermType(termType);
+
+                    msg = "添加成功!";
+
+                }
+
+            } else {
+                code = -100;
+                msg = "调用错误，请正确的传递参数.";
             }
-
-            message = "添加成功!";
-
+        } catch (Exception e) {
+            code = -100;
+            msg = e.getMessage();
+            LOGGER.info("添加失败，具体异常信息是：" + msg + "");
         }
-       response.setCharacterEncoding("utf-8");
-        response.setContentType("text/plain");
-        PrintWriter out = response.getWriter();
-        out.print("保存成功");
-        out.flush();
-        out.close();
+        printJsonTemplate(code, msg, data, request, response);
+
+    }
+
+    @RequestMapping(value = "/addTerms", method = RequestMethod.GET)
+    public void addTerms(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        //,@RequestParam(value = "type", required = true) String corpusType, @RequestParam(value = "terms", required = true) String terms, Model model
+
+        int code = 200;
+        String msg = "正常调用";
+        Map data = Maps.newHashMap();
+        String params = request.getParameter("params");
+
+        try {
+            if (params != null && !params.trim().isEmpty()) {
+                Map<String, String> paraMap = JSON.parseObject(params, new TypeReference<Map<String, String>>() {
+                });
+                String type = paraMap.get("type");
+                String terms = paraMap.get("terms");
+                if (type == null || type.trim().length() < 1 || terms == null || terms.trim().length() < 1) {
+                    msg = "词典类型不能为空并且词不能为空!";
+                } else {
+                    LOGGER.debug("新增类型:" + type + "词典:" + terms + "");
+                    List<String> words = Lists.newArrayList(terms.split(","));
+                    for (String word : words) {
+                        Term term = new Term(type, word);
+                        wordsOperation.addTerm(term);
+                    }
+
+                    msg = "添加成功!";
+
+                }
+
+            } else {
+                code = -100;
+                msg = "调用错误，请正确的传递参数.";
+            }
+        } catch (Exception e) {
+            code = -100;
+            msg = e.getMessage();
+            LOGGER.info("添加失败，具体异常信息是：" + msg + "");
+        }
+        printJsonTemplate(code, msg, data, request, response);
+
     }
 
 }

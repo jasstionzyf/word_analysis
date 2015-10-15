@@ -6,10 +6,12 @@
 package com.baihe.analysis.service.impl;
 
 import com.baihe.analysis.entity.Term;
+import com.baihe.analysis.entity.TermType;
 import com.baihe.analysis.service.Constants;
 import com.baihe.analysis.service.IWordsOperation;
 import com.baihe.analysis.service.TermQuery;
 import com.baihe.analysis.service.TermQueryInfo;
+import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.yufei.utils.FileUtil;
 import java.util.List;
@@ -69,5 +71,19 @@ public class WordsOperation implements IWordsOperation{
             wordsOperation.addTerm(term);
         }
         
+    }
+
+    @Override
+    public void addTermType(TermType termType) {
+        Constants.mps.save(termType);
+    }
+
+    @Override
+    public List<TermType> getTermTypes() {
+        List<TermType> termTypes=Lists.newArrayList();
+        Map<String,Object> params=null;
+        termTypes=Constants.mps.query(params, TermType.class);
+        
+        return termTypes;
     }
 }

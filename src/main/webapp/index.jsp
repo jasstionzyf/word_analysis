@@ -14,7 +14,40 @@
         <title>敏感词管理后台</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <script type="text/javascript">
+          <script type="text/javascript">
+
+            $(document).ready(function () {
+                $('#progressBar').css('visibility', 'hidden');
+
+                //初始化TermType下拉框
+                // save_text_type
+
+                $.ajax({
+                    url: "http://analysis.baihe.com/inner/analysis/loadTermTypes.json",
+                    dataType: "json",
+                    type: "GET",
+                    success: function (data) {
+                        termTypes = data.data.result;
+                        for (index = 0; index < termTypes.length; index++) {
+                            id = termTypes[index].id;
+                            type = termTypes[index].type;
+                            //  
+                            optionText = "<option value='" + id + "'>" + type + "</option>";
+                            $('#save_text_type').append(optionText);
+                            $('#query_textType').append(optionText);
+
+
+                        }
+
+                    }
+
+
+
+                });
+
+                
+                
+            });
 
 
 
@@ -23,8 +56,15 @@
             var pageSize = 20;
             var pageCount = 0;
             var textType = '';
+
+            function popupAddTermsType() {
+                $('#saveTermsType_form').modal({
+                    blurring: true,
+                    closable: false
+                }).modal('show');
+            }
             function popupAdd() {
-                $('.ui.form.basic.test.modal').modal({
+                $('#save_form').modal({
                     blurring: true,
                     closable: false
                 }).modal('show');
@@ -36,6 +76,9 @@
                         ;
             }
             function search() {
+                // $('#progressBar').hide();
+                $('#progressBar').css('visibility', 'visible');
+
                 textType = $('#query_textType').val();
                 //  alert(textType);
                 text = $('#query_text').val();
@@ -53,6 +96,8 @@
                     type: "GET",
                     data: "params=" + paramsStr,
                     success: function (data) {
+                        $('#progressBar').css('visibility', 'hidden');
+
                         processSearchResult(data);
                     }
                 });
@@ -74,6 +119,9 @@
                     pageCount = result.data.pageCount;
 //                    pageSize = result.data.pageSize;
                     terms = result.data.result;
+                    if (terms.length == 0) {
+                        alert("没有查询到结果!");
+                    }
 
                     for (index = 0; index < terms.length; index++) {
                         text = terms[index];
@@ -82,7 +130,7 @@
                                 "</td>" +
                                 "<td > " +
                                 $('#query_textType option:selected').text() +
-                                "</td>"+
+                                "</td>" +
                                 "<td> <div class = 'ui checked checkbox'>" +
                                 "<input class='deleteCheck' type = 'checkbox' termid='" + text.id + "'/> <label> </label>" +
                                 "</td>" +
@@ -185,6 +233,7 @@
 
 
                 });
+
                 paramsObj = new Object();
                 paramsObj.textType = textType;
                 paramsObj.ids = ids_;
@@ -205,21 +254,47 @@
 
 
             function save() {
-
+                paramsObj = new Object();
+                paramsObj.type = $('#save_text_type').val();
+                paramsObj.terms = $('#save_text').val();
+                paramsStr = JSON.stringify(paramsObj);
                 $.ajax({
                     url: "http://analysis.baihe.com/inner/analysis/addTerms.json",
                     dataType: "json",
-                    type: "POST",
-                    data: $('#save_form').serialize(),
+                    type: "GET",
+                    data: "params=" + paramsStr,
                     success: function (data) {
-                        alert('ok');
-                        return false;
+                        alert(data.msg);
+
                     }
 
                 });
 
 
-                return false;
+
+
+
+            }
+
+
+            function saveTermsType() {
+                paramsObj = new Object();
+                paramsObj.type = $('#termsType').val();
+                paramsObj.description = $('#termsTypeDesc').val();
+                paramsStr = JSON.stringify(paramsObj);
+                $.ajax({
+                    url: "http://analysis.baihe.com/inner/analysis/addTermType.json",
+                    dataType: "json",
+                    type: "GET",
+                    data: "params=" + paramsStr,
+                    success: function (data) {
+                        alert(data.msg);
+
+                    }
+
+                });
+
+
 
 
 
@@ -231,7 +306,11 @@
 
     </head>
     <body>
-<h1 class="ui header centered blue">百合敏感词管理</h1>
+
+        <h1 class="ui header centered blue">百合敏感词管理</h1>
+
+
+
 
         <div class="ui input">
             <input type="text" placeholder="Search..." id="query_text">
@@ -239,14 +318,19 @@
 
 
         <select class="ui dropdown" id="query_textType">
-            <option value="1">消息</option>
-            <option value="2">昵称</option>
-            <option value="3">自我介绍</option>
+            <!--            <option value="1">消息</option>
+                        <option value="2">昵称</option>
+                        <option value="3">自我介绍</option>-->
         </select>
         <button class="ui primary button" onclick="javascript:search();">搜索</button>
         <button class="ui primary button" onclick="javascript:popupAdd();">新增敏感词</button>
+        <button class="ui primary button" onclick="javascript:popupAddTermsType();">新增TermsType</button>
+        <div id="progressBar" class="ui active medium inline loader"></div>
 
-        <table class="ui single small compact line table red">
+
+
+
+        <table class="ui single small compact line table">
             <thead>
                 <tr><th>敏感词</th>
                     <th>类型</th>
@@ -284,14 +368,30 @@
     </div>
     <div class="field">
         <select id='save_text_type' name="type">
-            <option value="1">消息</option>
-            <option value="2">昵称</option>
-            <option value="3">自我介绍</option>
+            <!--            <option value="1">消息</option>
+                        <option value="2">昵称</option>
+                        <option value="3">自我介绍</option>-->
         </select>
     </div>
 
 
     <button  class="ui button" type="submit" onclick="javascript:save();"    >保存</button>
+    <button class="ui button" type="button" onclick="javascript:hidAdd();">返回</button>
+</form>
+
+
+<form class="ui form basic test modal" id="saveTermsType_form">
+    <div class="field">
+        <label>增加TermsType</label>
+        <input type="text" id="termsType"  placeholder="请输入TermsType">
+        <input type="text" id="termsTypeDesc"  placeholder="请输入TermsType描述">
+
+    </div>
+
+
+
+
+    <button  class="ui button" type="submit" onclick="javascript:saveTermsType();"    >保存</button>
     <button class="ui button" type="button" onclick="javascript:hidAdd();">返回</button>
 </form>
 

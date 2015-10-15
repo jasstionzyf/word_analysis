@@ -5,10 +5,10 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.baihe</groupId>
-    <artifactId>baihe-analysis</artifactId>
+    <artifactId>word-analysis</artifactId>
     <packaging>war</packaging>
     <version>0.0.1-SNAPSHOT</version>
-    <distributionManagement> 
+<!--    <distributionManagement> 
         <snapshotRepository> 
             <id>nexusServer</id> 
             <name>nexus distribution snapshot repository</name> 
@@ -24,7 +24,7 @@
                     <id>nexusServer</id>
                     <url>http://maven.baihe.com/nexus/content/repositories/releases</url>
            </repository>
-    </distributionManagement> 
+    </distributionManagement> -->
     <repositories>
         <repository>
             <id>nexusServer</id>
@@ -239,30 +239,13 @@
     </dependencies>
 
     <profiles>
-        <profile>
-            <!--测外-->
-            <id>emulate</id>
-            <activation>
+      
+        
+         <profile>
+            <id>test</id>
+             <activation>
                 <activeByDefault>true</activeByDefault>
             </activation>
-            <properties>
-                <mongo.server>172.16.16.7</mongo.server>
-            
-            </properties>
-        </profile>
-        <profile>
-            <!--测外-->
-            <id>product</id>
-           
-            <properties>
-                <mongo.server>172.16.16.7</mongo.server>
-            
-            </properties>
-        </profile>
-         <profile>
-            <!--测外-->
-            <id>test</id>
-           
             <properties>
                 <mongo.server>localhost</mongo.server>
             
@@ -279,7 +262,7 @@
                 <filtering>true</filtering>
             </resource>
         </resources>
-        <finalName>baihe-analysis</finalName>
+
 
         <plugins>
             <plugin>
@@ -290,7 +273,7 @@
                 <configuration>
 
                     <files>
-                        <file>src/main/resources/baihe-analysis.properties</file>
+                        <file>src/main/resources/word-analysis.properties</file>
                     </files>
                 </configuration>
                 <executions>
@@ -309,8 +292,8 @@
                 <version>2.3.2</version>
                 <artifactId>maven-compiler-plugin</artifactId>
                 <configuration>
-                    <source>1.8</source>
-                    <target>1.8</target>
+                    <source>8</source>
+                    <target>8</target>
                     
                     <encoding>UTF-8</encoding>
                     <skip>false</skip>
@@ -324,5 +307,5 @@
             <!--</plugin>-->
         </plugins>
     </build>
-    <name>baihe-analysis</name>
+    <name>word-analysis</name>
 </project>

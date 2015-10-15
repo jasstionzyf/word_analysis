@@ -6,6 +6,7 @@
 package com.baihe.analysis.service;
 
 import com.baihe.analysis.entity.Term;
+import com.baihe.analysis.entity.TermType;
 import java.util.List;
 
 /**
@@ -18,6 +19,10 @@ public interface IWordsOperation {
     public void removeTerm(long id);
 
     public void addTerm(Term term);
+    public void addTermType(TermType termType);
+    
+    public List<TermType> getTermTypes();
+    
 
     public List<Term> listTerms(TermQueryInfo queryInfo);
 

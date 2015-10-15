@@ -18,35 +18,31 @@ import org.springframework.data.mongodb.core.index.Indexed;
 @CompoundIndexes({
     @CompoundIndex(name = "type_text", def = "{'type': 1, 'text': 1}", unique = true)
 })
-public class Term extends Entity<Long>{
+public class Term extends Entity<Long> {
 
     public Term() {
     }
     //词的用途类别， 比如： 消息词， 昵称词以及自我介绍词
-    
+
     @Indexed(unique = false)
-    private String type=null;
-    private String text=null;
+    private String type = null;
+    private String text = null;
     @Transient
-    private int start=-1;
+    private int start = -1;
     @Transient
-    private int end=-1;
-    
-   
-    
+    private int end = -1;
 
     @Override
     public String toString() {
         return "Term{" + "type=" + type + ", text=" + text + ", start=" + start + ", end=" + end + '}';
     }
 
-    
-    public Term(String type,String text) {
+    public Term(String type, String text) {
         super();
-        this.text=text;
-        this.type=type;
+        this.text = text;
+        this.type = type;
     }
-    
+
     public String getType() {
         return type;
     }
@@ -78,6 +74,5 @@ public class Term extends Entity<Long>{
     public void setText(String text) {
         this.text = text;
     }
-    
-    
+
 }
