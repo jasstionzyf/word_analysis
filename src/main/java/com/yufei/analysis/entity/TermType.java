@@ -3,9 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.baihe.analysis.entity;
+package com.yufei.analysis.entity;
 
 import com.yufei.pfw.entity.Entity;
+import org.springframework.data.mongodb.core.index.Indexed;
 
 /**
  *
@@ -13,8 +14,9 @@ import com.yufei.pfw.entity.Entity;
  */
 public class TermType extends Entity<Long> {
 
+    @Indexed(unique = true)
     private String type = null;
-    private String description=null;
+    private String description = null;
 
     public String getDescription() {
         return description;
@@ -23,7 +25,6 @@ public class TermType extends Entity<Long> {
     public void setDescription(String description) {
         this.description = description;
     }
-    
 
     public String getType() {
         return type;

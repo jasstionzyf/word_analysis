@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.baihe.analysis.service;
+package com.yufei.analysis.service;
 
 import com.yufei.entity.query.BaseQueryInfo;
 
@@ -14,7 +14,7 @@ import com.yufei.entity.query.BaseQueryInfo;
 public class TermQueryInfo extends BaseQueryInfo{
     //模糊查询
     private String text=null;
-    private String type=null;
+    private Long type=-1l;
 
     public String getText() {
         return text;
@@ -24,13 +24,16 @@ public class TermQueryInfo extends BaseQueryInfo{
         this.text = text;
     }
 
-    public String getType() {
+    public Long getType() {
         return type;
     }
 
-    public void setType(String type) {
+    public void setType(Long type) {
         this.type = type;
     }
+
+    
+    
 
   
    

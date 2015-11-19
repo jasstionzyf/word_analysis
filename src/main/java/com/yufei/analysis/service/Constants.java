@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.baihe.analysis.service;
+package com.yufei.analysis.service;
 
 import com.yufei.pfw.service.MongodbPfwService;
 import com.yufei.pfw.service.PfwServiceFactory;

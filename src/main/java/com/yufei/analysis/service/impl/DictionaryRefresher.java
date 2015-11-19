@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.baihe.analysis.service.impl;
+package com.yufei.analysis.service.impl;
 
 import org.wltea.analyzer.dic.Dictionary;
 import org.wltea.analyzer.dic.IKMatchOperation;

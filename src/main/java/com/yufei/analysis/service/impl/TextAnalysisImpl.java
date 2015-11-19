@@ -3,14 +3,17 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.baihe.analysis.service.impl;
+package com.yufei.analysis.service.impl;
 
-import com.baihe.analysis.entity.Term;
-import com.baihe.analysis.service.TextAnalysis;
+import com.yufei.analysis.entity.Term;
+import com.yufei.analysis.service.TextAnalysis;
+import com.yufei.analysis.solr.IKTokenizer;
 import java.io.IOException;
 import java.io.StringReader;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.apache.lucene.analysis.tokenattributes.CharTermAttribute;
 import org.apache.lucene.analysis.tokenattributes.OffsetAttribute;
 import org.apache.lucene.analysis.tokenattributes.TypeAttribute;
@@ -20,7 +23,6 @@ import org.wltea.analyzer.dic.Dictionary;
 import org.wltea.analyzer.dic.IKMatchOperation;
 import org.wltea.analyzer.dic.MatchOperation;
 import org.wltea.analyzer.dic.WordsLoader;
-import org.wltea.analyzer.lucene.IKTokenizer;
 
 /**
  *
@@ -53,15 +55,15 @@ public class TextAnalysisImpl implements TextAnalysis {
                 if (currentType_1.equals(wordType)) {
                     Term term = new Term();
                     term.setText(charTermAttribute.toString());
-                    term.setType(currentType);
+                    term.setType(Long.parseLong(currentType.split("_")[1]));
                     term.setStart(offsetAttribute.startOffset());
                     term.setEnd(offsetAttribute.endOffset());
                     dirtyWords.add(term);
                 }
-
+                
             }
         } catch (IOException ex) {
-            mLog.info("error when tokenizer," + ex.getMessage() + "");
+            Logger.getLogger(TextAnalysisImpl.class.getName()).log(Level.SEVERE, null, ex);
         }
         return dirtyWords;
 

@@ -3,9 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.baihe.analysis.service;
+package com.yufei.analysis.service;
 
-import com.baihe.analysis.entity.Term;
+import com.yufei.analysis.entity.Term;
 import java.util.List;
 
 /**

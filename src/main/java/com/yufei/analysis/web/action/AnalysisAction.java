@@ -1,19 +1,19 @@
-package com.baihe.analysis.web.action;
+package com.yufei.analysis.web.action;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.TypeReference;
 import com.alibaba.fastjson.serializer.SerializerFeature;
-import com.baihe.analysis.entity.Term;
-import com.baihe.analysis.entity.TermType;
-import com.baihe.analysis.service.Constants;
-import com.baihe.analysis.service.IWordsOperation;
-import com.baihe.analysis.service.TermQuery;
-import com.baihe.analysis.service.TermQueryInfo;
-import com.baihe.analysis.service.TextAnalysis;
-import com.baihe.analysis.service.impl.TextAnalysisImpl;
-import com.baihe.analysis.service.impl.WordsOperation;
-import com.baihe.analysis.zk.ZkOperation;
+import com.yufei.analysis.entity.Term;
+import com.yufei.analysis.entity.TermType;
+import com.yufei.analysis.service.Constants;
+import com.yufei.analysis.service.IWordsOperation;
+import com.yufei.analysis.service.TermQuery;
+import com.yufei.analysis.service.TermQueryInfo;
+import com.yufei.analysis.service.TextAnalysis;
+import com.yufei.analysis.service.impl.TextAnalysisImpl;
+import com.yufei.analysis.service.impl.WordsOperation;
+import com.yufei.analysis.zk.ZkOperation;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 
@@ -56,13 +56,13 @@ public class AnalysisAction {
                 });
                 String text = paraMap.get("text");
 
-                String textType = paraMap.get("textType");
+                Long textType = Long.parseLong(paraMap.get("textType"));
                 List<Term> dirtyWords = textProcess.extractDirtyWords(text);
                 List<Term> finalTerms = Lists.newArrayList();
-                String tmpTextType = null;
+                Long tmpTextType = null;
                 for (Term dirtyWord : dirtyWords) {
-                    tmpTextType = dirtyWord.getType().split("_")[1];
-                    if (tmpTextType.contains(textType)) {
+                    tmpTextType = dirtyWord.getType();
+                    if (tmpTextType==textType) {
                         finalTerms.add(dirtyWord);
                     }
                 }
@@ -170,7 +170,7 @@ public class AnalysisAction {
                 if (textType != null) {
                     textType = textType.trim();
                 }
-                termQueryInfo.setType(textType);
+                termQueryInfo.setType(Long.parseLong(textType));
                 termQueryInfo.setCpn(Integer.parseInt(pageNum));
 
                 TermQuery termQuery = new TermQuery(termQueryInfo);
@@ -303,7 +303,7 @@ public class AnalysisAction {
                     LOGGER.debug("新增类型:" + type + "词典:" + terms + "");
                     List<String> words = Lists.newArrayList(terms.split(","));
                     for (String word : words) {
-                        Term term = new Term(type, word);
+                        Term term = new Term(Long.parseLong(type), word);
                         wordsOperation.addTerm(term);
                     }
 

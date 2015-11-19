@@ -3,10 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.baihe.analysis.service.impl;
+package com.yufei.analysis.service.impl;
 
-import com.baihe.analysis.entity.Term;
-import com.baihe.analysis.service.Constants;
+import com.yufei.analysis.entity.Term;
+import com.yufei.analysis.service.Constants;
 import com.mongodb.DBCursor;
 import com.mongodb.DBObject;
 import java.util.Iterator;
@@ -23,8 +23,9 @@ public class MongoWordsLoader implements WordsLoader {
     public Iterable<Word> load() {
         final DBCursor cursor = Constants.mps.getMongoTemplate().getDb().getCollection(Constants.mps.getMongoTemplate().getCollectionName(Term.class)).find();
 
-        Iterable<Word> iterable = new Iterable<Word>() {
-
+        Iterable<Word> iterable;
+        iterable = new Iterable<Word>() {
+            
             @Override
             public Iterator<Word> iterator() {
                 return new Iterator<Word>() {
@@ -39,9 +40,9 @@ public class MongoWordsLoader implements WordsLoader {
                         Word word = null;
                         DBObject db = cursor.next();
                         try {
-                            word = new Word((String) db.get("text"), Integer.parseInt((String) db.get("type")));
+                            word = new Word((String) db.get("text"),(Long)db.get("type"));
                         } catch (Exception e) {
-                          //ingore error
+                            //ingore error
                         }
 
                         return word;

@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.baihe.analysis.entity;
+package com.yufei.analysis.entity;
 
 import com.yufei.pfw.entity.Entity;
 import org.springframework.data.annotation.Transient;
@@ -25,7 +25,7 @@ public class Term extends Entity<Long> {
     //词的用途类别， 比如： 消息词， 昵称词以及自我介绍词
 
     @Indexed(unique = false)
-    private String type = null;
+    private Long type = -1l;
     private String text = null;
     @Transient
     private int start = -1;
@@ -37,19 +37,22 @@ public class Term extends Entity<Long> {
         return "Term{" + "type=" + type + ", text=" + text + ", start=" + start + ", end=" + end + '}';
     }
 
-    public Term(String type, String text) {
+    public Term(Long type, String text) {
         super();
         this.text = text;
         this.type = type;
     }
 
-    public String getType() {
+    public Long getType() {
         return type;
     }
 
-    public void setType(String type) {
+    public void setType(Long type) {
         this.type = type;
     }
+
+ 
+    
 
     public int getStart() {
         return start;

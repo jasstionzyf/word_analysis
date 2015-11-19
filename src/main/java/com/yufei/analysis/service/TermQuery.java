@@ -3,9 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.baihe.analysis.service;
+package com.yufei.analysis.service;
 
-import com.baihe.analysis.entity.Term;
+import com.yufei.analysis.entity.Term;
 import com.google.common.collect.Maps;
 import com.yufei.entity.query.AbstractQuery;
 import java.util.List;
@@ -26,9 +26,9 @@ public class TermQuery extends AbstractQuery<TermQueryInfo, Term> {
         int skip=(getCurrentPage()-1)*getPageSize();
         int limit=getPageSize();
         String matchedText = queryInfo.getText();
-        String type = queryInfo.getType();
+        Long type = queryInfo.getType();
         Map<String, Object> params = Maps.newHashMap();
-        if(type!=null&&type.length()>0){
+        if(type!=null&&type>0){
           params.put("type:=", type);  
         }
         if(matchedText!=null&&matchedText.length()>0){

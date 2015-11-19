@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.baihe.analysis.zk;
+package com.yufei.analysis.zk;
 
 import org.apache.zookeeper.CreateMode;
 

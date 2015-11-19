@@ -3,20 +3,20 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.baihe.analysis.service.impl;
+package com.yufei.analysis.service.impl;
 
-import com.baihe.analysis.entity.Term;
-import com.baihe.analysis.entity.TermType;
-import com.baihe.analysis.service.Constants;
-import com.baihe.analysis.service.IWordsOperation;
-import com.baihe.analysis.service.TermQuery;
-import com.baihe.analysis.service.TermQueryInfo;
+import com.yufei.analysis.entity.Term;
+import com.yufei.analysis.entity.TermType;
+import com.yufei.analysis.service.Constants;
+import com.yufei.analysis.service.IWordsOperation;
+import com.yufei.analysis.service.TermQuery;
+import com.yufei.analysis.service.TermQueryInfo;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.yufei.utils.FileUtil;
 import java.util.List;
 import java.util.Map;
-import org.wltea.analyzer.core.CorpusType;
+
 
 /**
  *
@@ -48,28 +48,28 @@ public class WordsOperation implements IWordsOperation{
         return terms;
     }
      public static void main(String[] args) {
-        IWordsOperation wordsOperation = new WordsOperation();
-        String message = "/data/ik_Analyzer/dic/message.dic";
-        String nickname = "/data/ik_Analyzer/dic/nickname.dic";
-        String selfintroduce = "/data/ik_Analyzer/dic/selfintroduce.dic";
-        List<String> worList=FileUtil.readLines(message);
-        for (String word : worList) {
-            Term term=new Term(String.valueOf(CorpusType.MESSAGE),word.trim()
-            );
-            wordsOperation.addTerm(term);
-        }
-        worList=FileUtil.readLines(nickname);
-        for (String word : worList) {
-            Term term=new Term(String.valueOf(CorpusType.NICKNAME),word.trim()
-            );
-            wordsOperation.addTerm(term);
-        }
-        worList=FileUtil.readLines(selfintroduce);
-        for (String word : worList) {
-            Term term=new Term(String.valueOf(CorpusType.SELFINTRODUCE),word.trim()
-            );
-            wordsOperation.addTerm(term);
-        }
+//        IWordsOperation wordsOperation = new WordsOperation();
+//        String message = "/data/ik_Analyzer/dic/message.dic";
+//        String nickname = "/data/ik_Analyzer/dic/nickname.dic";
+//        String selfintroduce = "/data/ik_Analyzer/dic/selfintroduce.dic";
+//        List<String> worList=FileUtil.readLines(message);
+//        for (String word : worList) {
+//            Term term=new Term(CorpusType.MESSAGE,word.trim()
+//            );
+//            wordsOperation.addTerm(term);
+//        }
+//        worList=FileUtil.readLines(nickname);
+//        for (String word : worList) {
+//            Term term=new Term(String.valueOf(CorpusType.NICKNAME),word.trim()
+//            );
+//            wordsOperation.addTerm(term);
+//        }
+//        worList=FileUtil.readLines(selfintroduce);
+//        for (String word : worList) {
+//            Term term=new Term(String.valueOf(CorpusType.SELFINTRODUCE),word.trim()
+//            );
+//            wordsOperation.addTerm(term);
+//        }
         
     }
 
