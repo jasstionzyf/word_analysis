@@ -4,67 +4,10 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.baihe</groupId>
+    <groupId>com.yufei</groupId>
     <artifactId>word-analysis</artifactId>
-    <packaging>war</packaging>
+    <packaging>jar</packaging>
     <version>0.0.1-SNAPSHOT</version>
-<!--    <distributionManagement> 
-        <snapshotRepository> 
-            <id>nexusServer</id> 
-            <name>nexus distribution snapshot repository</name> 
-            <url>http://maven.baihe.com/nexus/content/repositories/snapshots/</url> 
-            
-             <snapshots>
-            <updatePolicy>always</updatePolicy>
-        </snapshots>
-        
-        
-        </snapshotRepository> 
-           <repository>
-                    <id>nexusServer</id>
-                    <url>http://maven.baihe.com/nexus/content/repositories/releases</url>
-           </repository>
-    </distributionManagement> -->
-    <repositories>
-        <repository>
-            <id>nexusServer</id>
-            <name>nexus distribution snapshot repository</name> 
-            <url>http://maven.baihe.com/nexus/content/repositories/snapshots/</url> 
-           
-            <snapshots>
-                <enabled>true</enabled>
-            </snapshots>
-            
-        </repository>
-         <repository>
-            <id>central</id>
-            <url>https://repo1.maven.org/maven2</url>
-            <releases>
-                <enabled>true</enabled>
-            </releases>
-        </repository>
-        <repository>
-            <id>cloudera</id>
-            <url>https://repository.cloudera.com/artifactory/cloudera-repos/</url>
-        </repository>
-    </repositories>
-     <pluginRepositories>
-        <pluginRepository>
-            <id>central</id>
-            <url>https://repo1.maven.org/maven2</url>
-            <releases>
-                <enabled>true</enabled>
-            </releases>
-        </pluginRepository>
-        
-        <pluginRepository>
-            <id>cloudera</id>
-            <url>https://repository.cloudera.com/artifactory/cloudera-repos/</url>
-            <releases>
-                <enabled>true</enabled>
-            </releases>
-        </pluginRepository>
-    </pluginRepositories>
     <properties>
         <spring.version>4.1.6.RELEASE</spring.version>  
         <druid.version>1.0.12</druid.version>
@@ -78,13 +21,8 @@
     </properties>
 
     <dependencies>
-         <dependency>
-            <groupId>com.baihe</groupId>
-            <artifactId>utils</artifactId>
-            <scope>compile</scope>
-
-            <version>2.0</version>
-        </dependency>
+        
+        
         <dependency>
             <groupId>org.apache.curator</groupId>
             <artifactId>curator-recipes</artifactId>
@@ -144,7 +82,7 @@
         <dependency>
             <groupId>org.apache.solr</groupId>
             <artifactId>solr-solrj</artifactId>
-            <version>4.6.0</version>
+            <version>4.6.1</version>
             <scope>compile</scope>
         </dependency>
 
@@ -307,5 +245,5 @@
             <!--</plugin>-->
         </plugins>
     </build>
-    <name>word-analysis</name>
+    <name>analysis</name>
 </project>

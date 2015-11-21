@@ -6,7 +6,7 @@
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.serializer.SerializerFeature;
-import com.baihe.analysis.entity.Term;
+import com.yufei.analysis.entity.Term;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;

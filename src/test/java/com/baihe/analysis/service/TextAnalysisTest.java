@@ -5,44 +5,40 @@
  */
 package com.baihe.analysis.service;
 
-import com.baihe.analysis.service.impl.TextAnalysisImpl;
-import com.baihe.analysis.entity.Term;
-import com.baihe.analysis.service.impl.MongoWordsLoader;
-import com.baihe.analysis.service.impl.WordsOperation;
-import com.yufei.utils.FileUtil;
+import com.yufei.analysis.service.TextAnalysis;
+import com.yufei.analysis.service.impl.TextAnalysisImpl;
+import com.yufei.analysis.entity.Term;
+import com.yufei.analysis.service.Constants;
 import java.util.List;
+import java.util.Map;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import org.wltea.analyzer.core.CorpusType;
-import org.wltea.analyzer.dic.Dictionary;
-import org.wltea.analyzer.dic.IKMatchOperation;
-import org.wltea.analyzer.dic.MatchOperation;
-import org.wltea.analyzer.dic.WordsLoader;
+
 
 /**
  *
  * @author jasstion
  */
 public class TextAnalysisTest {
-    
+
     public TextAnalysisTest() {
     }
-    
+
     @BeforeClass
     public static void setUpClass() {
     }
-    
+
     @AfterClass
     public static void tearDownClass() {
     }
-    
+
     @Before
     public void setUp() {
     }
-    
+
     @After
     public void tearDown() {
     }
@@ -52,41 +48,43 @@ public class TextAnalysisTest {
      */
     @Test
     public void testExtractDirtyWords() {
-       
-        String input="赵宇飞毛泽东邓小平哪一起去吃饭高级餐厅卖淫一起去工作吧顺便大篮球赵宇赵宇飞赵国飞机";
-        
-       TextAnalysis textProcess=new  TextAnalysisImpl();
-       List<Term> result=textProcess.extractDirtyWords(input);
+
+        String input = "赵宇飞毛泽东邓小平哪一起去吃饭高级餐厅卖淫一起去工作吧顺便大篮球赵宇赵宇飞赵国飞机";
+
+        TextAnalysis textProcess = new TextAnalysisImpl();
+        List<Term> result = textProcess.extractDirtyWords(input);
         for (Term result1 : result) {
-            System.out.println(result1.toString()+"\n");
+            System.out.println(result1.toString() + "\n");
         }
 //        
 //        
 //        
 //        String text="女人";
     }
+
     public static void main(String[] args) {
-         
-        String input="毛泽东邓小平哪一起去吃饭高级餐厅卖淫一起去工作吧顺便大篮球赵宇赵宇飞赵国飞机";
+
+//        TermType termType = new TermType();
+//        termType.setType("鞋子品牌");
+//        termType.setDescription("");
+//        Long typeId = Constants.mps.save(termType);
+//        // Aokang/奥康  Septwolves/七匹狼  木林森
+//        Term term1 = new Term(typeId, "奥康");
+//        Term term2 = new Term(typeId, "木林森");
+//        Term term3 = new Term(typeId, "七匹狼");
+//        Constants.mps.save(term2);
+//        Constants.mps.save(term3);
+//                Constants.mps.save(term1);
+       
         
-       TextAnalysis textProcess=new  TextAnalysisImpl();
-       List<Term> result=textProcess.extractDirtyWords(input);
+        String input = "七匹狼毛泽东邓小平哪奥康一起去吃饭高级餐木林森厅卖";
+
+        TextAnalysis textProcess = new TextAnalysisImpl();
+        List<Term> result = textProcess.extractDirtyWords(input);
         for (Term result1 : result) {
-            System.out.println(result1.toString()+"\n");
+            System.out.println(result1.toString() + "\n");
         }
- 
-//        String analysisUrl="http://analysis.baihe.com/inner/analysis/checkTextIsValid.json";
-//         Map<String, Object> params = new HashMap<String, Object>();
-//            Map<String, Object> originalParams = new HashMap<String, Object>();
-//            originalParams.put("text", "我是一个有点小任性~小脾气的人!但是，㊣绝不会无理取闹!喜欢有责任心、有上进心、不花心的男人");
-//            originalParams.put("textType", "2");
-//            params.put("params", JSON.toJSONString(originalParams));
-//
-//           String result=HttpUtils.executeWithHttpV3(analysisUrl, 2*1000, 2*1000, 2*1000, 3, params);
-//            JSONObject jsonObject = JSON.parseObject(result);
-//            System.out.print(jsonObject.getJSONObject("data").getJSONArray("invalidWords").toString());
+
     }
-    
-   
-    
+
 }

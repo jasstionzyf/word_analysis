@@ -5,10 +5,10 @@
  */
 package com.baihe.analysis.service.impl;
 
-import com.baihe.analysis.entity.Term;
-import com.baihe.analysis.service.Constants;
-import com.baihe.analysis.service.IWordsOperation;
-import com.baihe.analysis.service.TermQueryInfo;
+import com.yufei.analysis.entity.Term;
+import com.yufei.analysis.service.Constants;
+import com.yufei.analysis.service.IWordsOperation;
+import com.yufei.analysis.service.TermQueryInfo;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.yufei.utils.FileUtil;
@@ -19,7 +19,6 @@ import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import org.wltea.analyzer.core.CorpusType;
 
 /**
  *

@@ -38,7 +38,7 @@
    
     
     
-    <mongo:mongo id="baihe" host="${mongo.server}" port="27017" >
+    <mongo:mongo id="sp" host="${mongo.server}" port="27017" >
     
         <mongo:options
     
@@ -60,8 +60,7 @@
 
     
     
-    <mongo:db-factory id="message" dbname="baihe_message" mongo-ref="baihe"   write-concern="NONE" />
-    <mongo:db-factory id="analysis" dbname="baihe_analysis" mongo-ref="baihe"   write-concern="NONE" />
+    <mongo:db-factory id="analysis"  dbname="dictionary" mongo-ref="sp"   write-concern="NONE" />
 
 
 
